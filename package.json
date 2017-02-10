@@ -1,0 +1,22 @@
+{
+  "name": "simple-command-executor",
+  "version": "1.0.0",
+  "description": "A simple remote OS command executor in node.js controlled over REST API",
+  "license": "MIT",
+  "author": "Tsvetelina Aleksandrova",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsvetelina-aleksandrova/simple-command-executor.git"
+  },
+  "scripts": {
+    "start": "nodemon server/server.js",
+    "lint": "jshint .",
+    "test": "echo \"TODO: Specify tests\""
+  },
+  "dependencies": {
+    "express": "^4.14.1",
+    "lodash": "^4.17.4",
+    "lowdb": "^0.15.4",
+    "winston": "^2.3.1"
+  }
+}
