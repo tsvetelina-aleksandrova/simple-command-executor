@@ -2,24 +2,20 @@
 
 const winston = require('winston');
 
-module.exports = () => {
-    return {
-        create: create
-    };
+module.exports = {create};
 
-    function create (category) {
-        winston.loggers.add(category, {
-            console: {
-                label: category,
-                colorize: true,
-                timestamp: formattedTimestamp
-            }
-        });
-        return winston.loggers.get(category);
-    }
+function create (category) {
+    winston.loggers.add(category, {
+        console: {
+            label: category,
+            colorize: true,
+            timestamp: formattedTimestamp
+        }
+    });
+    return winston.loggers.get(category);
+}
 
-    function formattedTimestamp() {
-        const timeNow = new Date();
-        return timeNow.toUTCString();
-    }
-};
+function formattedTimestamp() {
+    const timeNow = new Date();
+    return timeNow.toUTCString();
+}

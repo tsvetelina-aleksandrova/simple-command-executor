@@ -2,7 +2,7 @@
 
 const app = require('express')(),
     router = require('./router.js'),
-    logger = require('./helpers/logger.js')(),
+    logger = require('./helpers/logger.js'),
     log = logger.create('App Root'),
     config = require('./config/config.js'),
     port = config.get('port');

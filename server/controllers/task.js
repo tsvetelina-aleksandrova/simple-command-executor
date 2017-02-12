@@ -1,11 +1,16 @@
 'use strict';
 
-const logger = require('../helpers/logger.js')(),
-    log = logger.create('Task Controller');
+const logger = require('../helpers/logger.js'),
+    log = logger.create('Task Controller'),
+    taskExecutor = require('../services/taskExecutor.js');
 
 module.exports = (router) => {
     router.get('/', (req, res) => {
-        log.info('get all');
+        //log.info('get all');
+        var cmd = 'node --ver';
+        taskExecutor.exec(cmd)
+            .then((res) => console.log(res.stdout, res.stderr))
+            .catch((err) => console.log(err));
         res.sendStatus(200);
     });
 

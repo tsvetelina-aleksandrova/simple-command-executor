@@ -1,7 +1,7 @@
 # Simple command executor
 A simple remote OS command executor in node.js controlled over REST API
 ## Description
-Create a simple remote OS command executor in JS(nodejs) controlled over simple REST api. Please use plain node http.Server or as most Express. Persistency is not required.
+Create a simple remote OS command executor in JS(nodejs) controlled over simple REST api. Please use plain node http. Server or as most Express. Persistency is not required.
 
 When started, it should listen on some port and url like /tasks and should accept the following REST commands:
 
