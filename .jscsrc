@@ -1,0 +1,13 @@
+{
+    "requireSemicolons": true,
+    "requireParenthesesAroundIIFE": true,
+    "maximumLineLength": 120,
+    "validateIndentation": 4,
+    "disallowTrailingComma": true,
+    "disallowUnusedParams": true,
+    "disallowSpacesInsideObjectBrackets": true,
+    "safeContextKeyword": "_this",
+    "excludeFiles": [
+        "node_modules/**"
+    ]
+}
