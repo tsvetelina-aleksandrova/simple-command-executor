@@ -5,14 +5,13 @@ const winston = require('winston');
 module.exports = {create};
 
 function create (category) {
-    winston.loggers.add(category, {
+    return winston.loggers.add(category, {
         console: {
             label: category,
             colorize: true,
             timestamp: formattedTimestamp
         }
     });
-    return winston.loggers.get(category);
 }
 
 function formattedTimestamp() {

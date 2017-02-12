@@ -2,7 +2,9 @@
 
 const logger = require('../helpers/logger.js'),
     log = logger.create('Task Controller'),
-    taskExecutor = require('../services/taskExecutor.js');
+    handleError = require('../helpers/controllerUtils.js').handleError,
+    taskExecutor = require('../services/taskExecutor.js'),
+    task = require('../models/task.js');
 
 module.exports = (router) => {
     router.get('/', (req, res) => {
@@ -20,8 +22,19 @@ module.exports = (router) => {
     });
 
     router.post('/', (req, res) => {
-        log.info('create new');
-        res.sendStatus(200);
+        const command = req.body.command;
+        if (!command) {
+            handleError(res, log, 'Cannot create a task without specified OS command');
+        } else {
+            task.create(command)
+                .then((task) => {
+                    log.info(`Created task: ${task.id} for command ${task.command}`);
+                    res.json(task);
+                })
+                .catch((err) => {
+                    handleError(res, log, `Could not create a task for command ${command}. Error: ${err}`);
+                });
+        }
     });
 
     return router;

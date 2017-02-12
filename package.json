@@ -14,10 +14,12 @@
     "test": "echo \"TODO: Specify tests\""
   },
   "dependencies": {
+    "body-parser": "^1.16.1",
     "convict": "^2.0.0",
     "express": "^4.14.1",
     "lodash": "^4.17.4",
     "lowdb": "^0.15.4",
+    "uuid": "^3.0.1",
     "winston": "^2.3.1"
   }
 }
