@@ -14,7 +14,7 @@ function doExec(command) {
             if (error) {
                 return reject({code: error.code, data: stderr});
             } else {
-                return resolve({stdout});
+                return resolve(stdout);
             }
         });
     };

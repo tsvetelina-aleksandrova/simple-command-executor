@@ -9,7 +9,7 @@
     "url": "git+https://github.com/tsvetelina-aleksandrova/simple-command-executor.git"
   },
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "nodemon -i storage/storage.json server/server.js",
     "lint": "jshint . && jscs .",
     "test": "echo \"TODO: Specify tests\""
   },

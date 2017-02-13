@@ -3,7 +3,6 @@
 const logger = require('../helpers/logger.js'),
     log = logger.create('Task Controller'),
     handleError = require('../helpers/controllerUtils.js').handleError(log),
-    taskStatus = require('../models/taskStatus.js'),
     tasks = require('../models/task.js');
 
 module.exports = (router) => {
@@ -41,7 +40,7 @@ module.exports = (router) => {
     });
 
     router.post('/start/:id', (req, res) => {
-        tasks.update(req.params.id, {status: taskStatus.RUNNING})
+        tasks.update(req.params.id, {queued: true})
             .then((task) => {
                 log.info(`Queued task ${task.id} for execution`);
                 res.sendStatus(200);

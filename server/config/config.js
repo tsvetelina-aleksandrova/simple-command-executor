@@ -7,6 +7,18 @@ const convict = require('convict'),
             format: 'port',
             default: 4000,
             arg: 'port'
+        },
+        enableWorker: {
+            doc: 'Enable command execution worker',
+            format: 'Boolean',
+            default: true,
+            arg: 'enableWorker'
+        },
+        enableServer: {
+            doc: 'Enable command execiton tasks REST API',
+            format: 'Boolean',
+            default: true,
+            arg: 'enableApi'
         }
     });
 

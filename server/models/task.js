@@ -6,7 +6,7 @@ const _ = require('lodash'),
     tasks = db.get('tasks'),
     taskStatus = require('./taskStatus.js');
 
-module.exports = {create, update, getAll, getById, removeById};
+module.exports = {create, update, getQueued, getAll, getById, removeById};
 
 function create(command) {
     return tasks.push({
@@ -21,6 +21,11 @@ function create(command) {
 function update(id, values) {
     return tasks.find({id}).assign(values).write()
         .then(resolveTask(id));
+}
+
+function getQueued() {
+    const task = tasks.find({queued: true}).value();
+    return new Promise((resolve) => resolve(task));
 }
 
 function getAll(query) {
