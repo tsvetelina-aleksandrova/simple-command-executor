@@ -3,14 +3,14 @@
 const logger = require('../helpers/logger.js'),
     log = logger.create('Task Controller'),
     handleError = require('../helpers/controllerUtils.js').handleError(log),
-    //taskExecutor = require('../services/taskExecutor.js'),
+    taskStatus = require('../models/taskStatus.js'),
     tasks = require('../models/task.js');
 
 module.exports = (router) => {
     router.get('/', (req, res) => {
-        tasks.getAll()
+        tasks.getAll(req.query)
             .then((result) => {
-                log.info(`List all ${result.length} tasks`);
+                log.info(`List ${result.length} tasks`);
                 res.json(result);
             });
     });
@@ -31,19 +31,28 @@ module.exports = (router) => {
         } else {
             tasks.create(command)
                 .then((task) => {
-                    log.info(`Created task: ${task.id} for command ${task.command}`);
+                    log.info(`Created task: ${task.id} for command "${task.command}"`);
                     res.json(task);
                 })
                 .catch((err) => {
-                    handleError(res, `Could not create a task for command ${command}. Error: ${err}`);
+                    handleError(res, `Could not create a task for command "${command}". Error: ${err}`);
                 });
         }
     });
 
+    router.post('/start/:id', (req, res) => {
+        tasks.update(req.params.id, {status: taskStatus.RUNNING})
+            .then((task) => {
+                log.info(`Queued task ${task.id} for execution`);
+                res.sendStatus(200);
+            })
+            .catch((err) => handleError(res, `Could not queue task for execution. Error: ${err}`));
+    });
+
     router.delete('/:id', (req, res) => {
         tasks.removeById(req.params.id)
-            .then((task) => {console.log(task);
-                log.info(`Removed task: ${task.id} for command ${task.command}`);
+            .then((task) => {
+                log.info(`Removed task ${task.id} for command "${task.command}"`);
                 res.sendStatus(200);
             })
             .catch((err) => {
