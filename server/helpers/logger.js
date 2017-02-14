@@ -2,19 +2,21 @@
 
 const winston = require('winston');
 
-module.exports = {create};
+class LoggerFactory {
+    get(category) {
+        return winston.loggers.add(category, {
+            console: {
+                label: category,
+                colorize: true,
+                timestamp: this._formattedTimestamp
+            }
+        });
+    }
 
-function create (category) {
-    return winston.loggers.add(category, {
-        console: {
-            label: category,
-            colorize: true,
-            timestamp: formattedTimestamp
-        }
-    });
+    _formattedTimestamp() {
+        const timeNow = new Date();
+        return timeNow.toUTCString();
+    }
 }
 
-function formattedTimestamp() {
-    const timeNow = new Date();
-    return timeNow.toUTCString();
-}
+module.exports = new LoggerFactory();

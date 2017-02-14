@@ -1,21 +1,21 @@
 'use strict';
 
-const childExec = require('child_process').exec;
+const _ = require('lodash'),
+    childExec = require('child_process').exec;
 
-module.exports = {exec};
+class CommandExecutor {
+    exec(command) {
+        return new Promise(this._doExec(command));
+    }
 
-function exec(command) {
-    return new Promise(doExec(command));
+    _doExec(command) {
+        return (resolve, reject) => {
+            childExec(command, (error, stdout, stderr) => {
+                const res = {out: stdout, err: stderr, code: _.get(error, 'code', 0)};
+                return error ? reject(res) : resolve(res);
+            });
+        };
+    }
 }
 
-function doExec(command) {
-    return (resolve, reject) => {
-        childExec(command, (error, stdout, stderr) => {
-            if (error) {
-                return reject({code: error.code, data: stderr});
-            } else {
-                return resolve(stdout);
-            }
-        });
-    };
-}
+module.exports = new CommandExecutor();

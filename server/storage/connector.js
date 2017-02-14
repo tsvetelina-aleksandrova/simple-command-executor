@@ -1,13 +1,18 @@
 'use strict';
 
 const lowdb = require('lowdb'),
-    fileAsync = require('lowdb/lib/storages/file-async'),
-    db = lowdb('./server/storage/storage.json', {storage: fileAsync});
+    fileAsync = require('lowdb/lib/storages/file-async');
 
-module.exports = {db, setup};
+class DbConnector {
+    constructor() {
+        this.db = lowdb('./server/storage/storage.json', {storage: fileAsync});
+    }
 
-function setup() {
-    if (!db.has('tasks').value()) {
-        db.set('tasks', []).write();
+    setup() {
+        if (!this.db.has('tasks').value()) {
+            this.db.set('tasks', []).write();
+        }
     }
 }
+
+module.exports = new DbConnector();

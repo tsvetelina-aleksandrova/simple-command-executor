@@ -4,11 +4,12 @@ const _ = require('lodash'),
     uuid = require('uuid'),
     db = require('../storage/connector.js').db,
     tasks = db.get('tasks'),
-    taskStatus = require('./taskStatus.js');
+    taskStatus = require('./taskStatus.js'),
+    Task = () => {};
 
-module.exports = {create, update, getQueued, getAll, getById, removeById};
+_.extend(Task, {create, update, getQueued, getAll, getById, removeById});
 
-function create(command) {
+function create (command) {
     return tasks.push({
             id: uuid(),
             command,
@@ -25,18 +26,19 @@ function update(id, values) {
 
 function getQueued() {
     const task = tasks.find({queued: true}).value();
-    return new Promise((resolve) => resolve(task));
+    return createPromise(task);
 }
 
 function getAll(query) {
-    let result = _.isEmpty(query) ? tasks.cloneDeep() : tasks.filter(query);
-    result = result.value();
-    return new Promise((resolve) => resolve(_.isEmpty(result) ? [] : result));
+    const queryTasks = _.isEmpty(query) ? tasks.cloneDeep() : tasks.filter(query),
+        queryResult = queryTasks.value(),
+        result = _.isEmpty(queryResult) ? [] : queryResult;
+    return createPromise(result);
 }
 
 function getById(id) {
     const task = tasks.find({id}).value();
-    return new Promise((resolve) => resolve(task))
+    return createPromise(task)
         .then(resolveTask(id));
 }
 
@@ -54,3 +56,9 @@ function resolveTask(id) {
         return Promise.resolve(task);
     };
 }
+
+function createPromise(value) {
+    return new Promise((resolve) => resolve(value));
+}
+
+module.exports = Task;
