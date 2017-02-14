@@ -12,10 +12,11 @@ let running = 0;
 
 module.exports = () => {
     setInterval(poll, pollInterval);
+    log.info('Command execution worker has started');
 };
 
 function poll() {
-    if (running <= maxTasks) {
+    if (running < maxTasks) {
         tasks.getQueued()
             .then((task) => {
                 if (task) {

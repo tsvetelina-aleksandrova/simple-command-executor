@@ -1,6 +1,7 @@
 'use strict';
 
-const childExec = require('child_process').exec;
+const _ = require('lodash'),
+    childExec = require('child_process').exec;
 
 module.exports = {exec};
 
@@ -11,11 +12,8 @@ function exec(command) {
 function doExec(command) {
     return (resolve, reject) => {
         childExec(command, (error, stdout, stderr) => {
-            if (error) {
-                return reject({code: error.code, data: stderr});
-            } else {
-                return resolve(stdout);
-            }
+            const res = {out: stdout, err: stderr, code: _.get(error, 'code', 0)};
+            return error ? reject(res) : resolve(res);
         });
     };
 }
