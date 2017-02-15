@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function get_port ()
+get_port ()
 {
   local default_port=4000
   local min_port=1
@@ -22,7 +22,7 @@ function get_port ()
   fi
 }
 
-function get_task_id()
+get_task_id()
 {
   task_id=$1
 

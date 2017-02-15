@@ -1,7 +1,17 @@
 'use strict';
 
-const server = require('./server.js'),
+const applicationServer = require('./applicationServer.js'),
+    commandExecutionWorker = require('./commandExecutionWorker.js'),
+    DbConnector = require('./storage/connector.js'),
     configuration = require('./config/config.js'),
     configuredOptions = configuration.getOptions();
 
-server.start(configuredOptions);
+DbConnector.setup();
+
+if (configuredOptions.startServer) {
+    applicationServer.start(configuredOptions.port);
+}
+
+if (configuredOptions.startWorker) {
+    commandExecutionWorker.start();
+}

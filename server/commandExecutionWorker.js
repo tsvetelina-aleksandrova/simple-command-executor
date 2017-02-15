@@ -1,10 +1,10 @@
 'use strict';
 
-const LoggerFactory = require('../helpers/logger.js'),
+const LoggerFactory = require('./helpers/logger.js'),
     log = LoggerFactory.get('Command Execution Worker'),
-    taskStatus = require('../models/taskStatus.js'),
-    Task = require('../models/task.js'),
-    executor = require('../services/executor.js');
+    taskStatus = require('./models/taskStatus.js'),
+    Task = require('./models/taskDAO.js'),
+    executor = require('./services/commandExecutor.js');
 
 class CommandExecutionWorker {
     constructor() {
@@ -52,4 +52,4 @@ class CommandExecutionWorker {
 }
 
 
-module.exports = CommandExecutionWorker;
+module.exports = new CommandExecutionWorker();
