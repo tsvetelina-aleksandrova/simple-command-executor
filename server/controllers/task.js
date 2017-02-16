@@ -66,9 +66,7 @@ function start(req, res) {
         .catch((err) => handleError(res, `Could not queue task for execution. Error: ${err}`));
 }
 
-function handleError() {
-    return (res, message) => {
-        log.error(message);
-        res.status(400).json({error: message});
-    };
+function handleError(res, message) {
+    log.error(message);
+    res.status(400).json({error: message});
 }

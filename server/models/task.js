@@ -19,7 +19,8 @@ function create(command) {
 }
 
 function update(id, values) {
-    return tasks.find({id}).assign(values).write()
+    return getById(id)
+        .then(() => tasks.find({id}).assign(values).write())
         .then(resolveTask(id));
 }
 
@@ -48,7 +49,7 @@ function removeById(id) {
 }
 
 function resolveTask(id) {
-    return (task) => {
+    return (task) => {console.log(task);
         if (_.isEmpty(task)) {
             return Promise.reject(`Task with id ${id} does not exist`);
         }
